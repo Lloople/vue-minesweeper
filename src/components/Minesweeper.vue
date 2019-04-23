@@ -90,19 +90,13 @@
       revealColindantTiles (x, y) {
         this.getViableColindantTiles(x, y).forEach(coords => {
 
-          this.tiles[coords[0]][coords[1]].revealed = true
+          this.reveal(coords[0], coords[1])
 
-          if (this.tiles[coords[0]][coords[1]].minesNear !== 0) {
-            return
-          }
-
-          this.revealColindantTiles(coords[0], coords[1])
         })
       }
     },
     computed: {
       winner () {
-        // TODO; Check this method
         return this.tiles.flat().filter(tile => !tile.mine).filter(tile => !tile.revealed).length === 0
       }
     },
