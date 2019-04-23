@@ -7,7 +7,7 @@
                     <tile
                             :x="tile.x"
                             :y="tile.y"
-                            :mine="tile.mine"
+                            hasMine="tile.mine"
                             :minesNear="tile.minesNear"
                             :gameOver="gameOver"
                             :winner="winner"
@@ -44,7 +44,7 @@
             let tile = {
               x: y,
               y: x,
-              mine: Math.floor(Math.random() * 7) === 6,
+              hasMine: Math.floor(Math.random() * 7) === 6,
               minesNear: 0,
               revealed: false
             }
@@ -55,7 +55,7 @@
 
         tiles.forEach(tilesRow => {
           tilesRow.forEach(tile => {
-            if (!tile.mine) {
+            if (!tile.hasMine) {
               return
             }
 
@@ -97,7 +97,7 @@
     },
     computed: {
       winner () {
-        return this.tiles.flat().filter(tile => !tile.mine).filter(tile => !tile.revealed).length === 0
+        return this.tiles.flat().filter(tile => !tile.hasMine).filter(tile => !tile.revealed).length === 0
       }
     },
     created () {
