@@ -1,8 +1,10 @@
 import Vue from 'vue'
-import App from './App.vue'
+import Minesweeper from './components/Minesweeper.vue'
+
+import './assets/styles.css'
 
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App)
+  render: h => h(Minesweeper)
 }).$mount('#app')
