@@ -19,7 +19,7 @@
     height: 40px;
     float: left;
     margin: 1px;
-    @apply bg-grey-light
+    @apply .bg-grey-light;
 }
 
 .tile.revealed {

@@ -1,8 +1,12 @@
 <template>
-    <div class="tile" :class="{ revealed : revealed }" v-on:click="cleanOrExplode">
+    <div class="tile" :class="{ revealed : revealed }" v-on:contextmenu="flag" v-on:click="cleanOrExplode">
         <span v-if="mine && gameOver">💥</span>
-        <span v-if="flagged">🚩</span>
-        <span :class="coloredCounter" v-if="nearMinesCounter !== null">{{ nearMinesCounter }}</span>
+        <span v-if="flagged && ! revealed">🚩</span>
+        <span v-if="mine && winner">💣</span>
+        <span :class="coloredCounter" v-if="revealed && minesNear > 0">{{ minesNear }}</span>
+
+        <!--<span v-if="mine">💣</span>-->
+        <!--<span :class="coloredCounter" v-if="! mine && minesNear > 0">{{ minesNear}}</span>-->
     </div>
 </template>
 
@@ -12,58 +16,63 @@
     props: {
       x: Number,
       y: Number,
+      minesNear: Number,
       mine: Boolean,
       gameOver: {
         type: Boolean,
         default: false
+      },
+      winner: {
+        type: Boolean,
+        default: false
+      },
+      revealed: {
+        type: Boolean,
+        default: false
       }
     },
-    data() {
+    data () {
       return {
-        revealed: false,
-        flagged: false,
-        nearMinesCounter: null
+        flagged: false
       }
     },
     methods: {
-      cleanOrExplode() {
-        if (this.mine) {
-          // emit an event to tell it's gameOver
+      cleanOrExplode () {
+        if (this.gameOver) {
           return;
         }
 
-        this.revealed = true;
+        if (this.mine) {
+          this.$emit('game-over')
+          return
+        }
 
-        // this.nearMinesCounter = parentComponent.revealTile(x, y);
-        // 👆 parent component should reveal adjacent tiles until a bomb is found 🤔.
-        // This looks like the most tricky part
-        this.nearMinesCounter = 1;
+        this.$emit('reveal', this.x, this.y);
+
+        if (this.minesNear === 0) {
+          this.$emit('reveal-colindant', this.x, this.y);
+        }
+      },
+      flag() {
+        this.flagged = true;
       }
     },
     computed: {
-        coloredCounter() {
-          if (! this.nearMinesCounter) {
-            return '';
-          }
-
-          if (this.nearMinesCounter <= 2) {
-            return 'text-blue';
-          }
-
-          if (this.nearMinesCounter <= 4) {
-            return 'text-red';
-          }
-
-          return 'text-black';
+      coloredCounter () {
+        if (!this.minesNear) {
+          return ''
         }
-    },
-    created() {
-        // Finish this as I don't know if it's working or not
-        window.addEventListener('mousedown', e => {
-          if (e.keyCode === 3) {
-            alert("Right click!");
-          }
-        });
+
+        if (this.minesNear <= 2) {
+          return 'text-blue'
+        }
+
+        if (this.minesNear <= 4) {
+          return 'text-red'
+        }
+
+        return 'text-black'
+      }
     }
   }
 </script>
