@@ -1,34 +1,17 @@
-# vue-minesweeper
+# 💣 Minesweeper game built with Vue
 
-## Project setup
-```
-npm install
-```
+📚 Just for learning purposes.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+This is my second project wih Vue, so there will be a lot of code
+that can be done more efficiently. Please, feel free to create any 
+pull request you want 🙂
 
-### Compiles and minifies for production
-```
-npm run build
-```
+# Road Map
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [ ] Add tests for the components
+- [ ] Finish the test suite for the current code
+- [ ] Add score board with local storage
+- [ ] Add button for resetting the game
+- [ ] Add Webpack, postCSS or whatever it's needed to add Tailwind
+- [ ] Add TailwindCSS
+- [ ] Center the board properly
