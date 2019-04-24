@@ -1,24 +1,35 @@
 <template>
-    <div class="container text-center w-1/2 mt-4 mx-auto">
-        <h1>Welcome to the classic minesweeper! 💣</h1>
-        <div class="w-2/3 mx-auto text-center mt-8">
+    <div class="container text-center xl:w-1/2 mt-4 mx-auto">
+        <h2>Minesweeper game made with Vue</h2>
+        <h1 class="text-4xl text-center">{{ gameOver ? '😵' : '🙂' }}</h1>
+        <div class="mx-auto text-center mt-8">
+
             <div v-for="(tilesRow, indexRow) in tiles" :key="indexRow">
                 <div v-for="(tile, index) in tilesRow" :key="index">
                     <tile
                             :x="tile.x"
                             :y="tile.y"
-                            hasMine="tile.mine"
+                            :hasMine="tile.hasMine"
                             :minesNear="tile.minesNear"
                             :gameOver="gameOver"
                             :winner="winner"
                             :revealed="tile.revealed"
+                            :flagged="tile.flagged"
                             v-on:reveal="reveal"
                             v-on:game-over="setGameOver"
-                            v-on:reveal-colindant="revealColindantTiles"
+                            v-on:reveal-adjacent="revealAdjacentTiles"
+                            v-on:flag="flag"
                     ></tile>
                 </div>
                 <div class="clearfix"></div>
             </div>
+
+
+            <h2>
+                <span class="float-left">Mines: {{ totalMines }}</span>
+                <span class="float-right">Flags: {{ totalFlags }}</span>
+            </h2>
+
         </div>
     </div>
 </template>
@@ -34,7 +45,7 @@
     data () {
       return {
         tiles: this.prepareTiles(),
-        gameOver: false
+        gameOver: false,
       }
     },
     methods: {
@@ -46,7 +57,8 @@
               y: x,
               hasMine: Math.floor(Math.random() * 7) === 6,
               minesNear: 0,
-              revealed: false
+              revealed: false,
+              flagged: false
             }
 
             return tile
@@ -59,7 +71,7 @@
               return
             }
 
-            this.getViableColindantTiles(tile.x, tile.y).forEach(coords => {
+            this.getViableAdjacentTiles(tile.x, tile.y).forEach(coords => {
               tiles[coords[0]][coords[1]].minesNear++
             })
           })
@@ -67,7 +79,7 @@
 
         return tiles
       },
-      getViableColindantTiles (x, y) {
+      getViableAdjacentTiles (x, y) {
         return [
           [x - 1, y - 1],
           [x, y - 1],
@@ -86,11 +98,23 @@
       },
       reveal (x, y) {
         this.tiles[x][y].revealed = true
+        this.tiles[x][y].flagged = false
       },
-      revealColindantTiles (x, y) {
-        this.getViableColindantTiles(x, y).forEach(coords => {
+      flag (x, y) {
+        this.tiles[x][y].flagged = true
+      },
+      revealAdjacentTiles (x, y) {
+        this.getViableAdjacentTiles(x, y).forEach(coords => {
+
+          if (this.tiles[coords[0]][coords[1]].revealed) {
+            return;
+          }
 
           this.reveal(coords[0], coords[1])
+
+          if (this.tiles[coords[0]][coords[1]].minesNear === 0) {
+            this.revealAdjacentTiles(coords[0], coords[1]);
+          }
 
         })
       }
@@ -98,6 +122,12 @@
     computed: {
       winner () {
         return this.tiles.flat().filter(tile => !tile.hasMine).filter(tile => !tile.revealed).length === 0
+      },
+      totalMines () {
+        return this.tiles.flat().filter(tile => tile.hasMine).length
+      },
+      totalFlags() {
+        return this.tiles.flat().filter(tile => tile.flagged).length
       }
     },
     created () {

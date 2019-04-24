@@ -4,13 +4,17 @@
 
 @tailwind utilities;
 
-#app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+html, body, #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
     margin-top: 20px;
+}
+h2 {
+    font-weight: normal;
+    margin: 30px auto 0 auto;
 }
 
 .tile {
@@ -19,11 +23,11 @@
     height: 40px;
     float: left;
     margin: 1px;
+    line-height: 40px;
     @apply .bg-grey-light;
 }
 
 .tile.revealed {
-    line-height: 40px;
     @apply .bg-grey-lightest .text-black;
 }
 

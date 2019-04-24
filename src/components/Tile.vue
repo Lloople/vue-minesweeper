@@ -1,12 +1,10 @@
 <template>
     <div class="tile" :class="{ revealed : revealed }" v-on:contextmenu="flag" v-on:click="cleanOrExplode">
         <span v-if="hasMine && gameOver">💥</span>
-        <span v-if="flagged && ! revealed">🚩</span>
+        <span v-if="flagged && ! winner">🚩</span>
         <span v-if="hasMine && winner">💣</span>
         <span :class="coloredCounter" v-if="revealed && minesNear > 0">{{ minesNear }}</span>
 
-        <!--<span v-if="mine">💣</span>-->
-        <!--<span :class="coloredCounter" v-if="! mine && minesNear > 0">{{ minesNear}}</span>-->
     </div>
 </template>
 
@@ -21,16 +19,12 @@
       gameOver: Boolean,
       winner: Boolean,
       revealed: Boolean,
-    },
-    data () {
-      return {
-        flagged: false
-      }
+      flagged: Boolean
     },
     methods: {
       cleanOrExplode () {
         if (this.gameOver) {
-          return;
+          return
         }
 
         if (this.hasMine) {
@@ -38,14 +32,14 @@
           return
         }
 
-        this.$emit('reveal', this.x, this.y);
+        this.$emit('reveal', this.x, this.y)
 
         if (this.minesNear === 0) {
-          this.$emit('reveal-colindant', this.x, this.y);
+          this.$emit('reveal-adjacent', this.x, this.y)
         }
       },
-      flag() {
-        this.flagged = true;
+      flag () {
+        this.$emit('flag', this.x, this.y)
       }
     },
     computed: {
