@@ -1,7 +1,7 @@
 <template>
     <div class="container text-center xl:w-1/2 mt-4 mx-auto">
         <h2>Minesweeper game made with Vue</h2>
-        <h1 class="text-4xl text-center">{{ gameOver ? '😵' : '🙂' }}</h1>
+        <h1 class="text-4xl text-center">{{ displayClassicEmoji }}</h1>
         <div class="mx-auto text-center mt-8">
 
             <div v-for="(tilesRow, indexRow) in tiles" :key="indexRow">
@@ -128,6 +128,24 @@
       },
       totalFlags() {
         return this.tiles.flat().filter(tile => tile.flagged).length
+      },
+      totalUnrevealed() {
+        return this.tiles.flat().filter(tile => !tile.revealed && !tile.flagged).length
+      },
+      displayClassicEmoji() {
+        if (this.gameOver) {
+          return '😵'
+        }
+
+        if (this.winner) {
+          return '😎'
+        }
+
+        if (this.totalUnrevealed <= 5) {
+          return '😧'
+        }
+
+        return '🙂'
       }
     },
     created () {
