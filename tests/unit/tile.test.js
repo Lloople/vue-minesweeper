@@ -28,6 +28,9 @@ describe('Tile.vue', () => {
 
     tile.setProps({ winner: true })
     expect(tile.text()).not.toBe('🚩')
+
+    tile.setProps({ gameOver: true })
+    expect(tile.text()).not.toBe('🚩')
   })
 
   test('it shows the bomb when game ends', () => {

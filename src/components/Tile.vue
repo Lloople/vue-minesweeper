@@ -1,7 +1,7 @@
 <template>
     <div class="tile" :class="{ revealed : revealed }" v-on:contextmenu="flag" v-on:click="cleanOrExplode">
         <span v-if="hasMine && gameOver">💥</span>
-        <span v-if="flagged && ! winner">🚩</span>
+        <span v-if="flagged && ! winner && ! gameOver">🚩</span>
         <span v-if="hasMine && winner">💣</span>
         <span :class="coloredCounter" v-if="revealed && minesNear > 0">{{ minesNear }}</span>
 
@@ -39,6 +39,9 @@
         }
       },
       flag () {
+        if (this.gameOver || this.winner) {
+          return
+        }
         this.$emit('flag', this.x, this.y)
       }
     },
