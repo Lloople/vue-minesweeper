@@ -23,7 +23,7 @@
     },
     methods: {
       cleanOrExplode () {
-        if (this.gameOver) {
+        if (this.gameOver || this.winner) {
           return
         }
 
