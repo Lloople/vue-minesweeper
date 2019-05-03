@@ -12,6 +12,6 @@ pull request you want 🙂
 - [ ] Finish the test suite for the current code
 - [ ] Add score board with local storage
 - [ ] Add button for resetting the game
-- [ ] Add Webpack, postCSS or whatever it's needed to add Tailwind
-- [ ] Add TailwindCSS
+- [X] Add Webpack, postCSS or whatever it's needed to add Tailwind
+- [X] Add TailwindCSS
 - [ ] Center the board properly
