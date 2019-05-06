@@ -119,7 +119,7 @@
     },
     computed: {
       winner () {
-        return this.tiles.flat().filter(tile => !tile.hasMine && !tile.revealed).length === 0
+        return this.tiles.flat().filter(tile => !tile.hasMine).filter(tile => !tile.revealed).length === 0
       },
       totalMines () {
         return this.tiles.flat().filter(tile => tile.hasMine).length
