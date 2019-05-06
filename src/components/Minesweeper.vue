@@ -52,7 +52,7 @@
       prepareTiles () {
         let tiles = [...Array(10).keys()].map(y => {
           return [...Array(10).keys()].map(x => {
-            let tile = {
+            return {
               x: y,
               y: x,
               hasMine: Math.floor(Math.random() * 7) === 6,
@@ -60,8 +60,6 @@
               revealed: false,
               flagged: false
             }
-
-            return tile
           })
         })
 
@@ -101,19 +99,19 @@
         this.tiles[x][y].flagged = false
       },
       flag (x, y) {
-        this.tiles[x][y].flagged = true
+        this.tiles[x][y].flagged = ! this.tiles[x][y].flagged
       },
       revealAdjacentTiles (x, y) {
         this.getViableAdjacentTiles(x, y).forEach(coords => {
 
           if (this.tiles[coords[0]][coords[1]].revealed) {
-            return;
+            return
           }
 
           this.reveal(coords[0], coords[1])
 
           if (this.tiles[coords[0]][coords[1]].minesNear === 0) {
-            this.revealAdjacentTiles(coords[0], coords[1]);
+            this.revealAdjacentTiles(coords[0], coords[1])
           }
 
         })
@@ -121,18 +119,18 @@
     },
     computed: {
       winner () {
-        return this.tiles.flat().filter(tile => !tile.hasMine).filter(tile => !tile.revealed).length === 0
+        return this.tiles.flat().filter(tile => !tile.hasMine && !tile.revealed).length === 0
       },
       totalMines () {
         return this.tiles.flat().filter(tile => tile.hasMine).length
       },
-      totalFlags() {
+      totalFlags () {
         return this.tiles.flat().filter(tile => tile.flagged).length
       },
-      totalUnrevealed() {
+      totalUnrevealed () {
         return this.tiles.flat().filter(tile => !tile.revealed && !tile.flagged).length
       },
-      displayClassicEmoji() {
+      displayClassicEmoji () {
         if (this.gameOver) {
           return '😵'
         }

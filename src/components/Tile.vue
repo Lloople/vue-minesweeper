@@ -42,6 +42,7 @@
         if (this.gameOver || this.winner) {
           return
         }
+
         this.$emit('flag', this.x, this.y)
       }
     },

@@ -53,7 +53,7 @@ describe('Tile.vue', () => {
     expect(tile.text()).toBe('💥')
   })
 
-  test('can determine the correct class', () => {
+  test('can determine the correct text color', () => {
     const tile = shallowMount(Tile)
 
     tile.setProps({ minesNear: 0 })
