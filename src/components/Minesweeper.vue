@@ -2,6 +2,7 @@
     <div class="container text-center xl:w-1/2 mt-4 mx-auto">
         <h2>Minesweeper game made with Vue</h2>
         <h1 class="text-4xl text-center">{{ displayClassicEmoji }}</h1>
+        <button v-if="gameOver" v-on:click="playAgain" class="play-again-button">Play Again</button>
         <div class="mx-auto text-center mt-8">
 
             <div v-for="(tilesRow, indexRow) in tiles" :key="indexRow" class="board-container">
@@ -115,6 +116,10 @@
           }
 
         })
+      },
+      playAgain() {
+        this.tiles = this.prepareTiles();
+        this.gameOver = false;
       }
     },
     computed: {
