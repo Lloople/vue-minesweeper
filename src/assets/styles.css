@@ -18,6 +18,11 @@ h2 {
     margin: 30px auto 0 auto;
 }
 
+.board-container {
+    display: flex;
+    justify-content: center;;
+}
+
 .tile {
     cursor: pointer;
     width: 40px;

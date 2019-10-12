@@ -4,7 +4,7 @@
         <h1 class="text-4xl text-center">{{ displayClassicEmoji }}</h1>
         <div class="mx-auto text-center mt-8">
 
-            <div v-for="(tilesRow, indexRow) in tiles" :key="indexRow">
+            <div v-for="(tilesRow, indexRow) in tiles" :key="indexRow" class="board-container">
                 <div v-for="(tile, index) in tilesRow" :key="index">
                     <tile
                             :x="tile.x"
