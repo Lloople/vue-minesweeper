@@ -37,3 +37,8 @@ h2 {
     @apply .bg-grey-lightest .text-black;
 }
 
+.play-again-button {
+    padding: 20px;
+    background: #DAE1E7;
+}
+

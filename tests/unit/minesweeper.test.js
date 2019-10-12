@@ -61,4 +61,17 @@ describe('Minesweeper.vue', () => {
     expect(ms.vm.tiles[4][8].flagged).toBeFalsy()
   })
 
+  test('Play again clicked, and game reset', () => {
+    const ms = shallowMount(Minesweeper)
+
+    ms.vm.reveal(4, 8)
+
+    ms.vm.setGameOver()
+
+    ms.vm.playAgain()
+
+    expect(ms.vm.gameOver).toBeFalsy()
+    
+    expect(ms.vm.tiles[4][8].revealed).toBeFalsy()
+  })
 })
