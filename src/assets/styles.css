@@ -38,7 +38,6 @@ h2 {
 }
 
 .play-again-button {
-    padding: 20px;
-    background: #DAE1E7;
+    @apply .px-8 .py-4 .bg-grey-light;
 }
 
