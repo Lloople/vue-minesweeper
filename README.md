@@ -14,4 +14,4 @@ pull request you want 🙂
 - [ ] Add button for resetting the game
 - [X] Add Webpack, postCSS or whatever it's needed to add Tailwind
 - [X] Add TailwindCSS
-- [ ] Center the board properly
+- [X] Center the board properly
